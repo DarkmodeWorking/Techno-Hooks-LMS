@@ -8,8 +8,6 @@ import { Toaster } from './components/ui/sonner'
 import { useLoadUserQuery } from './store/api/authAPI'
 import LoadingSpinner from './components/LoadingSpinner'
 
-
-
 const Custom = ({children}) => {
   const {isLoading} = useLoadUserQuery()
   return (
