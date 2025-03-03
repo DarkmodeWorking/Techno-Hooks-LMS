@@ -42,31 +42,33 @@ const Dashboard = () => {
 				</CardContent>
 			</Card>
 
-			<Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4">
+			<Card className='shadow-lg hover:shadow-xl transition-shadow duration-300 col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4'>
         <CardHeader>
-          <CardTitle className="text-xl font-semibold">
-            Course Prices
-          </CardTitle>
+          <CardTitle className='text-xl font-semibold'>Course Prices</CardTitle>
         </CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={250}>
-            <LineChart data={courseData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+          <ResponsiveContainer width='100%' height={350}> 
+            <LineChart data={courseData} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
+              <CartesianGrid strokeDasharray='3 3' stroke='#e0e0e0' />
               <XAxis
-                dataKey="name"
-                stroke="#6b7280"
-                angle={-30} // Rotated labels for better visibility
-                textAnchor="end"
-                interval={0} // Display all labels
+                dataKey='name'
+                stroke='#6b7280'
+                angle={-40} 
+                textAnchor='end'
+                interval={0} 
+                height={70} 
               />
-              <YAxis stroke="#6b7280" />
-              <Tooltip formatter={(value, name) => [`₹${value}`, name]} />
+              <YAxis stroke='#6b7280' />
+              <Tooltip
+                formatter={(value, name) => [`₹${value}`, name]}
+                contentStyle={{ backgroundColor: '#1c1917', color: '#fff', borderRadius: '8px' }}
+              />
               <Line
-                type="monotone"
-                dataKey="price"
-                stroke="#4a90e2" // Changed color to a different shade of blue
+                type='monotone'
+                dataKey='price'
+                stroke='#ff004f'
                 strokeWidth={3}
-                dot={{ stroke: "#4a90e2", strokeWidth: 2 }} // Same color for the dot
+                dot={{ stroke: '#fff', strokeWidth: 2 }}
               />
             </LineChart>
           </ResponsiveContainer>
