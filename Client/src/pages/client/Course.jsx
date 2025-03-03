@@ -17,7 +17,7 @@ const Course = ({course}) => {
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-3'>
               <Avatar className='h-8 w-8'>
-                <AvatarImage src={course.creator?.photoURL || 'https://avatars.githubusercontent.com/u/185953875?v=4'} />
+                <AvatarImage src={course.creator?.photoURL || 'https://e7.pngegg.com/pngimages/507/702/png-clipart-profile-icon-simple-user-icon-icons-logos-emojis-users.png'} />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               <h1 className='font-medium text-sm'>{course.creator?.name}</h1>
@@ -26,8 +26,8 @@ const Course = ({course}) => {
               {course.courseLevel}
             </Badge>
           </div>
-          <div className='text-lg font-bold'>
-            <span>Price: {course.coursePrice}</span>
+          <div className='text-lg font-bold text-primary'>
+            Price - <span className='text-white'>₹ {course.coursePrice}</span>
           </div>
         </CardContent>
       </Card>
