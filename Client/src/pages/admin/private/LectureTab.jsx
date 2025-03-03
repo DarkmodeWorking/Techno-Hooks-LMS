@@ -12,7 +12,7 @@ import { useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
 // const MEDIA_API = 'http://localhost:8080/api/v1/media'
-const MEDIA_API = 'https://techschool-20xi.onrender.com/api/v1/media'
+const MEDIA_API = 'https://techno-hooks-lms.onrender.com/api/v1/media'
 
 const LectureTab = () => {
 	const [lectureTitle, setLectureTitle] = useState('')

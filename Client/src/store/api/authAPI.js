@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { userLoggedIn, userLoggedOut } from '../authSlice'
 
-const USER_API = 'https://techschool-20xi.onrender.com/api/v1/user/'
+const USER_API = 'https://techno-hooks-lms.onrender.com/api/v1/user/'
 // const USER_API = 'http://localhost:8080/api/v1/user/'
 
 export const authApi = createApi({

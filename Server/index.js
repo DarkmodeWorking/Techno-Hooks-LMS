@@ -23,7 +23,7 @@ const _dirname = path.resolve()
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin: 'https://techschool-20xi.onrender.com/',
+    origin: 'https://techno-hooks-lms.onrender.com/',
     // origin: 'http://localhost:5173',
     credentials: true
 }))
