@@ -40,6 +40,13 @@ export const courseApi = createApi({
                 method: 'GET'
             })
         }),
+		deleteCourse: builder.mutation({
+			query: (courseId) => ({
+				url: `${courseId}`,
+				method: 'DELETE'
+			}),
+			invalidatesTags: ['Refetch-Creater-Course']
+		}),
         createLecture: builder.mutation({
             query: ({lectureTitle, courseId}) => ({
                 url: `/${courseId}/lecture`,
@@ -92,26 +99,20 @@ export const courseApi = createApi({
         }),
         getSearchCourse:builder.query({
             query: ({searchQuery, categories, sortByPrice}) => {
-              // Build qiery string
-              let queryString = `/search?query=${encodeURIComponent(searchQuery)}`
-      
-              // append cateogry 
-              if(categories && categories.length > 0) {
-                const categoriesString = categories.map(encodeURIComponent).join(",");
-                queryString += `&categories=${categoriesString}`; 
-              }
-      
-              // Append sortByPrice is available
-              if(sortByPrice){
-                queryString += `&sortByPrice=${encodeURIComponent(sortByPrice)}`; 
-              }
-      
-              return {
-                url:queryString,
-                method:"GET", 
-              }
+              	let queryString = `/search?query=${encodeURIComponent(searchQuery)}`
+              	if(categories && categories.length > 0) {
+                	const categoriesString = categories.map(encodeURIComponent).join(",")
+                	queryString += `&categories=${categoriesString}`
+      	 	    }
+   	            if(sortByPrice){
+                    queryString += `&sortByPrice=${encodeURIComponent(sortByPrice)}`
+                }
+                return {
+                    url:queryString,
+                    method:"GET", 
+                }
             }
-          }),
+        }),
     })
 })
 
@@ -120,6 +121,7 @@ export const {
     useGetCreatorCourseQuery,
     useEditCourseMutation,
     useGetCoursebyIdQuery,
+	useDeleteCourseMutation,
     useCreateLectureMutation,
     useGetCourseLectureQuery,
     useEditLectureMutation,

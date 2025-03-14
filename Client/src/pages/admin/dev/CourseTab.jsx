@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { useEditCourseMutation, useGetCoursebyIdQuery, usePublishCourseMutation } from '@/store/api/courseAPI'
+import { useDeleteCourseMutation, useEditCourseMutation, useGetCoursebyIdQuery, usePublishCourseMutation } from '@/store/api/courseAPI'
 import { Loader2 } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -25,6 +25,8 @@ const CourseTab = () => {
   const courseId = params.courseId
 
   const {data: coursebyIdData, isLoading: courseByIdLoading, refetch} = useGetCoursebyIdQuery(courseId, {refetchOnMountOrArgChange: true})
+
+  const [deleteCourse, { isLoading: isDeleting }] = useDeleteCourseMutation()
 
   const [publishCourse, {}] = usePublishCourseMutation()
 
@@ -96,12 +98,24 @@ const CourseTab = () => {
     }
   }
 
+  const removeCourseHandler = async () => {
+    try {
+      const response = await deleteCourse(courseId)
+      if (response.data) {
+        toast.success('Course removed successfully')
+        navigate('/admin/course') 
+      }
+    } catch (error) {
+      toast.error('Failed to remove course')
+    }
+  }
+
   useEffect(() => {
     if (isSuccess) {
-      toast.success( 'Course updated')
+      toast.success('Course updated')
     }
     if (error) {
-      toast.error( 'Failed to update Course')
+      toast.error('Failed to update Course')
     }
   }, [isSuccess, error])
 
@@ -126,7 +140,16 @@ const CourseTab = () => {
               )
             }
           </Button>
-          <Button>Remove Course</Button>
+          <Button disabled={isDeleting} onClick={removeCourseHandler}>
+            {isDeleting ? (
+              <>
+                <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                Removing...
+              </>
+            ) : (
+              'Remove Course'
+            )}
+          </Button>
         </div>
       </CardHeader>
       <CardContent>
@@ -157,15 +180,15 @@ const CourseTab = () => {
                     <SelectItem value="computer-science">Computer Science</SelectItem>
                     <SelectItem value="ui-ux">UI / UX Designing</SelectItem>
                     <SelectItem value="front-end-web">Front Web Development</SelectItem>
-                    <SelectItem value="front-end-app">Front App Development</SelectItem>
                     <SelectItem value="back-end">Back End Development</SelectItem>
+                    <SelectItem value="app-dev">App Development</SelectItem>
                     <SelectItem value="cloud-computing">Cloud Computing</SelectItem>
                     <SelectItem value="ai-ml">Artificial Intelligence</SelectItem>
                     <SelectItem value="cyber-secuirty">Cybersecurity</SelectItem>
                     <SelectItem value="data-science">Data Science</SelectItem>
                     <SelectItem value="dev-ops">Dev Ops</SelectItem>
                     <SelectItem value="databases">Databases</SelectItem>
-                    <SelectItem value="quantum">Quantum Computing</SelectItem>
+                    <SelectItem value="game-dev">Game Development</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
