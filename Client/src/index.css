@@ -79,3 +79,17 @@
 body {
   font-family: 'Geist', sans-serif;
 }
+
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+  border-radius: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary));
+  border-radius: 8px;
+}
