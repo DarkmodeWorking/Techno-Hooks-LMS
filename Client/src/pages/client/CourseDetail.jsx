@@ -49,15 +49,15 @@ const CourseDetail = () => {
 					<Card>
 						<CardHeader>
 							<CardTitle>Course Content</CardTitle>
-							<CardDescription>5 lectures</CardDescription>
+							<CardDescription>{course.lectures.length} Lectures</CardDescription>
 						</CardHeader>
 						<CardContent className='space-y-3'>
 							{
-								course.lectures.map((lecture, idx) => (
+								course.lectures.slice(0, 5).map((lecture, idx) => (
 									<div key={idx} className='flex items-center gap-3 text-sm'>
 									  <span>
 											{
-												true ? (<PlayCircle size={14} />) : <Lock size={14} />
+												false ? (<PlayCircle size={14} />) : <Lock size={14} />
 											}
 										</span>
 										<p>{lecture.lectureTitle}</p>
@@ -73,9 +73,9 @@ const CourseDetail = () => {
 							<div className='w-full aspect-video mb-4'>
 								<ReactPlayer width='100%' height={'100%'} url={course.lectures[0].videoUrl} controls={true} />
 							</div>
-							<h1>Lecture Title</h1>
+							<h1><span className='text-primary'>Currently Playing</span>  - {course.lectures[0].lectureTitle} </h1>
 							<Separator className='my-2' />
-							<h1 className='text-lg md:text-xl font-semibold'>Course Price</h1>
+							<h1 className='text-lg md:text-xl font-semibold'> Course Price - ₹ {course.coursePrice}</h1>
 						</CardContent>
 						<CardFooter className='flex justify-center p-4'>
 							{
