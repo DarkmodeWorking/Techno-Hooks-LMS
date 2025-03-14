@@ -31,42 +31,36 @@ export const createCourse = async (req, res) => {
 
 export const searchCourse = async (req,res) => {
     try {
-        const {query = "", categories = [], sortByPrice =""} = req.query;
-        console.log(categories);
-        
-        // create search query
+        const {query = '', categories = [], sortByPrice = ''} = req.query
         const searchCriteria = {
-            isPublished:true,
-            $or:[
-                {courseTitle: {$regex:query, $options:"i"}},
-                {subTitle: {$regex:query, $options:"i"}},
-                {category: {$regex:query, $options:"i"}},
+            isPublished: true,
+            $or: [
+                { courseTitle: { $regex: query, $options: 'i' } },
+                { subTitle: { $regex: query, $options: 'i' } },
+                { category: { $regex: query, $options: 'i' } },
             ]
         }
-
-        // if categories selected
         if(categories.length > 0) {
-            searchCriteria.category = {$in: categories};
+            searchCriteria.category = { $in: categories }
         }
-
-        // define sorting order
-        const sortOptions = {};
-        if(sortByPrice === "low"){
-            sortOptions.coursePrice = 1;//sort by price in ascending
-        }else if(sortByPrice === "high"){
-            sortOptions.coursePrice = -1; // descending
+        const sortOptions = {}
+        if (sortByPrice === 'low') {
+            sortOptions.coursePrice = 1
+        } 
+        else if (sortByPrice === 'high') {
+            sortOptions.coursePrice = -1
         }
-
-        let courses = await Course.find(searchCriteria).populate({path:"creator", select:"name photoUrl"}).sort(sortOptions);
-
+        let courses = await Course.find(searchCriteria).populate({path: 'creator', select: 'name photoUrl'}).sort(sortOptions)
         return res.status(200).json({
             success:true,
             courses: courses || []
-        });
-
+        })
     } catch (error) {
-        console.log(error);
-        
+        console.log(error)  
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to search Course'
+        })
     }
 }
 
@@ -169,6 +163,33 @@ export const getCourseByID = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: 'Failed to fetch Course by ID'
+        })
+    }
+}
+
+export const deleteCourse = async (req, res) => {
+    try {
+        const { courseId } = req.params
+        const course = await Course.findById(courseId)
+        if (!course) {
+            return res.status(404).json({
+                success: false,
+                message: 'Course not found'
+            })
+        }
+        if (course.courseThumbnail) {
+            const publicID = course.courseThumbnail.split('/').pop().split('.')[0]
+            await deleteMediaFromCloudinary(publicID)
+        }
+        await Course.findByIdAndDelete(courseId)
+        return res.status(200).json({
+            success: true,
+            message: 'Course deleted successfully'
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to delete course'
         })
     }
 }
