@@ -5,6 +5,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Course = ({course}) => {
+  console.log(course)
+
   return (
     <Link to={`/course-detail/${course._id}`}>
       <Card className='overflow-hidden rounded-lg shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 cursor-pointer'>
@@ -27,7 +29,7 @@ const Course = ({course}) => {
             </Badge>
           </div>
           <div className='text-lg font-bold text-primary'>
-            Price - <span className='text-white'>₹ {course.coursePrice}</span>
+            Price - <span className='text-black dark:text-white'>₹ {course.coursePrice}</span>
           </div>
         </CardContent>
       </Card>
